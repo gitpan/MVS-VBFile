@@ -8,7 +8,7 @@ require Exporter;
 
 @ISA = qw(Exporter);
 @EXPORT = qw(vbget);
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 my $blib = 0;  # Bytes left in block
 
@@ -28,7 +28,7 @@ sub vbget {
     if ($n < 4) {  # End of file
        return undef();
     }
-    $blib = unpack("s2", substr($bdw, 0,2)) - 4;
+    $blib = unpack("n2", substr($bdw, 0,2)) - 4;
  }
 	#--- Now read the Record Descriptor Word
  $n = read($FH, $rdw, 4);
@@ -36,7 +36,7 @@ sub vbget {
     Carp::carp "vbget: Unexpected end of file";
     return undef();
  }
- $reclen = unpack("s2", substr($rdw, 0,2)) - 4;
+ $reclen = unpack("n2", substr($rdw, 0,2)) - 4;
  
  $n = read($FH, $v_record, $reclen);
  if ($n != $reclen) {
@@ -60,7 +60,7 @@ sub vbget_array {
        if ($n < 4) {  # End of file
           return @out;
        }
-       $blib = unpack("s2", substr($bdw, 0,2)) - 4;
+       $blib = unpack("n2", substr($bdw, 0,2)) - 4;
     }
 	#--- Now read the Record Descriptor Word
     $n = read($FH, $rdw, 4);
@@ -68,7 +68,7 @@ sub vbget_array {
        Carp::carp "vbget: Unexpected end of file";
        return @out;
     }
-    $reclen = unpack("s2", substr($rdw, 0,2)) - 4;
+    $reclen = unpack("n2", substr($rdw, 0,2)) - 4;
  
     $n = read($FH, $v_record, $reclen);
     if ($n != $reclen) {
@@ -111,11 +111,6 @@ close -- but variable-length files require some special handling.
 Since Perl provides open and close, the only function needed is one to 
 get the next record.
 
-VB is the only format supported.  In particular, this function will
-not work properly on format V (unblocked variable-length) or VBS
-(spanned).  Since VB is by far the most commonly used format, this
-should not be a major snag.
-
 Read the file as follows:
 
   open FILEHANDLE, "..name..";
@@ -126,6 +121,13 @@ Read the file as follows:
   @much_in_little = vbget(*FILEHANDLE);
   # and then process the array (only on small files, of course).
   close FILEHANDLE;
+
+=head1 RESTRICTIONS
+
+VB is the only format supported.  In particular, this function will
+not work properly on format V (unblocked variable-length) or VBS
+(spanned).  Since VB is by far the most commonly used format, this
+should not be a major snag.
 
 =head1 AUTHOR
 
