@@ -9,12 +9,13 @@ require Exporter;
 @ISA = qw(Exporter);
 @EXPORT = qw(vbget);
 @EXPORT_OK = qw(vbget vbopen vbput vbclose vb_blocks_written);
-$VERSION = '0.04';
+$VERSION = '0.05';
 
 %EXPORT_TAGS = ( all => [ @EXPORT_OK ] );
 
 my $blib = 0;  # Bytes left in block
 $MVS::VBFile::bdws = 0;
+$MVS::VBFile::keep_rdw = 0;
 
 %MVS::VBFile::outblock = ();
 %MVS::VBFile::blksizes = ();
@@ -53,6 +54,7 @@ sub vbget {
     Carp::carp "vbget: Unexpected end of file";
  }
  $blib = $blib - ($reclen + 4)  if $MVS::VBFile::bdws;
+ $v_record = $rdw.$v_record  if $MVS::VBFile::keep_rdw;
 
  return $v_record;
 }
@@ -89,6 +91,8 @@ sub vbget_array {
        return @out;
     }
     $blib = $blib - ($reclen + 4)  if $MVS::VBFile::bdws;
+    $v_record = $rdw.$v_record  if $MVS::VBFile::keep_rdw;
+
     push @out, $v_record;
  }
 }
@@ -262,12 +266,17 @@ Here's a full example of writing output:
   vbclose(*VBO);
   $b = vb_blocks_written(*VBO);
 
-=head1 VARIABLE
+=head1 VARIABLES
 
 The variable B<MVS::VBFile::bdws> applies only to input.  It tells the
 module whether the file to be read contains block descriptor words.
 The default is 0 (false); set it to 1 or any other true value if the
 file contains BDW's.
+
+The variable B<MVS::VBFile::keep_rdw> applies only to input.
+It tells vbget whether to keep the RDW on each record when getting it.
+The default is 0 (false); set it to 1 or any other true value if you
+want to keep the RDW's on the records.
 
 =head1 RESTRICTIONS
 
@@ -298,7 +307,7 @@ and then transferring the converted file.
 
 W. Geoffrey Rommel, GROMMEL@cpan.org, March 1999.
 
-Thanks to Bob Shair (bshair@amdocs.com) for suggesting vbput and
+Thanks to Bob Shair for suggesting vbput and
 providing preliminary code.
 
 =cut

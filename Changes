@@ -13,3 +13,6 @@ Revision history for Perl extension MVS::VBFile.
 
 0.04  Thu Mar  8 13:57:05 2001
 	- added vbopen, vbput, vbclose
+
+0.05  Wed May 12 10:00:46 2004
+	- added keep_rdw option
