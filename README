@@ -1,9 +1,9 @@
 MVS::VBFile - Perl extension to read variable blocked files from MVS
 
-MVS::VBFile is a Perl module.  It supplies a single function, vbget(),
-that gets the next record from a mainframe MVS file in variable (VB
-or V) format.  See the POD documentation in the module, or "man
-MVS::VBFile" after you have installed it.
+MVS::VBFile is a Perl module.  It provides functions to get records
+from mainframe MVS files in variable blocked (VB) format and to write
+records in a similar format.  See the POD documentation in the module,
+or "man MVS::VBFile" after you have installed it.
 
 Prerequisites
 =============
@@ -21,14 +21,14 @@ The usual:
 This module is written in Perl only, so it should be portable to
 all UN*X platforms at least.
 
-Copyright (c) 2000 Geoffrey Rommel.  All rights reserved.
+Copyright © 2001 Geoffrey Rommel.  All rights reserved.
 This program is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 
 
 
 Geoffrey Rommel
-Technical Consultant
-Sears, Roebuck and Co.
-grommel@sears.com
+Database Administrator
+Webley Systems
+GROMMEL@cpan.org
 
 March 1999

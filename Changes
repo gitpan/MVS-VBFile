@@ -10,3 +10,6 @@ Revision history for Perl extension MVS::VBFile.
 
 0.03  Fri Aug 18 13:56:58 2000
 	- added option to process or ignore BDW's
+
+0.04  Thu Mar  8 13:57:05 2001
+	- added vbopen, vbput, vbclose
