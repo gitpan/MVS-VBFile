@@ -7,3 +7,6 @@ Revision history for Perl extension MVS::VBFile.
 0.02  Mon Apr 12 08:47:38 1999
 	- changed unpacking from 's' (native) to 'n' (network) so
 	  that it would also work on little-endian machines
+
+0.03  Fri Aug 18 13:56:58 2000
+	- added option to process or ignore BDW's

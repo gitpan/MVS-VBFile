@@ -3,5 +3,6 @@ MANIFEST
 Makefile.PL
 README
 VBFile.pm
-mvs_vb.testfile
+mvsvb1.txt
+mvsvb2.txt
 test.pl
