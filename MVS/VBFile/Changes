@@ -1,0 +1,5 @@
+Revision history for Perl extension MVS::VBFile.
+
+0.01  Wed Mar  3 08:21:43 1999
+	- original version; created by h2xs 1.18
+	- Geoffrey Rommel (grommel@sears.com)
